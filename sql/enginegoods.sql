@@ -1,0 +1,1 @@
+INSERT INTO `enginegoods` (`id`, `fct_id`, `maker_id`, `good_id`, `num`, `live_time`, `buy_time`, `died_time`, `use_time`, `inuse`, `locked`) VALUES (17, 'S302', 1003, '600000296', 1, NULL, '2018-1-25', NULL, 0, 0, 1);

@@ -1,0 +1,11 @@
+INSERT INTO `homepage` (`box_id`, `box_name`, `box_type`, `box_txt`, `box_router`, `box_area`) VALUES (1, '主数据维护', '1', 'admin维护', '/all', '1');
+INSERT INTO `homepage` (`box_id`, `box_name`, `box_type`, `box_txt`, `box_router`, `box_area`) VALUES (2, '主数据查询', '2', '用户查询物料基本信息', '/all', '1');
+INSERT INTO `homepage` (`box_id`, `box_name`, `box_type`, `box_txt`, `box_router`, `box_area`) VALUES (3, '物料分布维护', '1', '用于管理员维护所有物料内容，妥协分布点', '/query', '1');
+INSERT INTO `homepage` (`box_id`, `box_name`, `box_type`, `box_txt`, `box_router`, `box_area`) VALUES (4, '物料分布查询', '2', '所有用户查询所有燃机及其备件分布情况', '/query', '1');
+INSERT INTO `homepage` (`box_id`, `box_name`, `box_type`, `box_txt`, `box_router`, `box_area`) VALUES (5, '成员管理', '1', '用于管理员维护燃机联储联备系统成员入口', '/manager', '1');
+INSERT INTO `homepage` (`box_id`, `box_name`, `box_type`, `box_txt`, `box_router`, `box_area`) VALUES (6, '成员查看', '2', '所有用户信息查询入口', '/manager', '1');
+INSERT INTO `homepage` (`box_id`, `box_name`, `box_type`, `box_txt`, `box_router`, `box_area`) VALUES (7, '制造商维护', '1', '制造商目录维护', '/maker', '1');
+INSERT INTO `homepage` (`box_id`, `box_name`, `box_type`, `box_txt`, `box_router`, `box_area`) VALUES (8, '制造商查看', '2', '制造商目录查询', '/maker', '1');
+INSERT INTO `homepage` (`box_id`, `box_name`, `box_type`, `box_txt`, `box_router`, `box_area`) VALUES (9, '燃机备件采购', '2', '采购燃机及其备件入口', '/buy', '2');
+INSERT INTO `homepage` (`box_id`, `box_name`, `box_type`, `box_txt`, `box_router`, `box_area`) VALUES (10, '调拨业务', '2', '燃机及其备件调拨流程入口', '/change', '2');
+INSERT INTO `homepage` (`box_id`, `box_name`, `box_type`, `box_txt`, `box_router`, `box_area`) VALUES (11, '报废业务', '2', '燃机及其备件报废流程入口', '/die', '2');

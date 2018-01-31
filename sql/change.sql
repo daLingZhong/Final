@@ -1,0 +1,1 @@
+INSERT INTO `change` (`id`, `change_id`, `fct1`, `fct2`, `engine_type`, `num1`, `engineForm_id`, `good_name`, `num2`, `goodsForm_id`, `change_time`, `look`, `pass`, `reason`) VALUES (12, '029020812S302', '0290', 'S302', NULL, NULL, NULL, '耐油橡胶板δ10丁腈橡胶', '1', 17, '2018-1-29', 0, 1, NULL);
