@@ -29,4 +29,6 @@ module.exports = function(app) {
 	app.post('/collect', user.collect.post)
 	app.get('/getCollectList', user.getCollectList.get)
 	app.post('/collectAction', user.collectAction.post)
+	app.post('/updateEngineFct', user.updateEngineFct.post)
+	app.post('/updateGoodFct', user.updateGoodFct.post)
 }

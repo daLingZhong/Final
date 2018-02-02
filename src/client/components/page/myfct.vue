@@ -121,13 +121,13 @@
           <el-input v-model="engineForm.num" auto-complete="off" :disabled="edit"></el-input>
         </el-form-item>
         <el-form-item label="已使用时长" :label-width="formLabelWidth">
-          <el-input-number v-model="engineForm.use_time" :min="1" :max="50" controls-position="right"></el-input-number>
+          <el-input-number v-model="engineForm.use_time" :min="0" :max="engineForm.live_time" controls-position="right"></el-input-number>
         </el-form-item><br>
         <el-form-item label="购入时间" :label-width="formLabelWidth">
           <el-date-picker type="date" placeholder="选择日期" v-model="engineForm.buy_time" :disabled="edit"></el-date-picker>
         </el-form-item><br>
         <el-form-item label="报废时间" :label-width="formLabelWidth">
-          <el-date-picker type="date" placeholder="选择日期" v-model="engineForm.died_time"></el-date-picker>
+          <el-date-picker type="date" placeholder="选择日期" v-model="engineForm.died_time" @change="diedLock()"></el-date-picker>
         </el-form-item><br>
         <el-form-item label="使用中" :label-width="formLabelWidth">
             <el-switch
@@ -159,7 +159,7 @@
           <el-input v-model="goodForm.num" auto-complete="off" :disabled="edit"></el-input>
         </el-form-item>
         <el-form-item label="已使用时长" :label-width="formLabelWidth">
-          <el-input-number v-model="goodForm.use_time" :min="1" :max="50" controls-position="right"></el-input-number>
+          <el-input-number v-model="goodForm.use_time" :min="0" :max="goodForm.live_time" controls-position="right"></el-input-number>
         </el-form-item><br>
         <el-form-item label="购入时间" :label-width="formLabelWidth">
           <el-date-picker type="date" placeholder="选择日期" v-model="goodForm.buy_time" :disabled="edit"></el-date-picker>
@@ -197,7 +197,12 @@
         formLabelWidth: '11rem',
         edit:true,
         engineForm:'',
-        goodForm:''
+        goodForm:'',
+        engineIndex:'',
+        goodIndex:'',
+        engineInuse:'',
+        goodInuse:'',
+        a:''
       };
     },
     mounted(){
@@ -212,18 +217,28 @@
         }
         this.engine = engine
         this.goods = goods
-        console.log(this.goods)
       });
     },
     methods: {
       handleClick1(index,row) {
         this.goodsDialog = true
         this.goodForm = JSON.parse(JSON.stringify(this.goods[index]));
+        this.goodIndex = index;
+        if(this.goodForm.inuse ===1){
+          this.goodForm.inuse = "1"
+        }else if(this.goodForm.inuse ===0){
+          this.goodForm.inuse = "0"
+        }
       },
       handleClick(index,row) {
         this.engineDialog = true
         this.engineForm = JSON.parse(JSON.stringify(this.engine[index]));
-        console.log(index);
+        this.engineIndex = index;
+        if(this.engineForm.inuse ===0){
+          this.engineForm.inuse = "0"
+        }else if(this.engineForm.inuse ===1){
+          this.engineForm.inuse = "1"
+        }
       },
       insertCancel(){
         this.engineDialog = false
@@ -232,10 +247,38 @@
         this.goodsDialog = false
       },
       insertDown(){
-
+        var engine = this.engineForm;
+        if(this.engineForm.died_time != null){
+          this.engineForm.died_time = moment(this.engineForm.died_time).format("YYYY-MM-DD");
+        }else{
+          this.engineForm.died_time = null
+        }
+        this.$http.post('/updateEngineFct',engine).then((param)=>{
+          this.engine.splice(this.engineIndex,1,this.engineForm);
+          this.engineDialog = false
+        });
       },
       insertDown1(){
-
+        var goods = this.goodForm;
+        if(this.goodForm.died_time != null){
+          this.goodForm.died_time = moment(this.goodForm.died_time).format("YYYY-MM-DD");
+        }else{
+          this.goodForm.died_time = null
+        }
+        this.$http.post('/updateGoodFct',goods).then((param)=>{
+          this.goods.splice(this.goodIndex,1,this.goodForm);
+          this.goodsDialog = false;
+        });
+      },
+      diedLock(){
+        if(this.engineForm.died_time != null){
+          this.engineForm.inuse = "0"
+        }
+      },
+      diedLock1(){
+        if(this.goodForm.died_time != null){
+          this.goodForm.inuse = "0"
+        }        
       },
       inuse: function (row, column) {
           return row.inuse == 1 ? '是' : row.inuse == 0 ? '否' : '';

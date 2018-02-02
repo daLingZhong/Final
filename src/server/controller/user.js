@@ -199,7 +199,7 @@ module.exports.myMessageBuyPass = {
       // console.log(222)
       if ((data.engine.length == 0) && (data.good.length != 0)) {
         for (var i = 0; i < data.good.length; i++) {
-          var sql1 = 'insert into enginegoods(fct_id,maker_id,good_id,num,buy_time,inuse,use_time,locked) values("' + data.good[i].fct_id + '","' + data.maker_id + '","' + data.good[i].good_id + '","' + data.good[i].num2 + '","' + data.time + '","1","0","0");update buy set look = "0",pass = "1" where buy_id = "' + data.buy_id + '"';
+          var sql1 = 'insert into enginegoods(fct_id,maker_id,good_id,num,buy_time,inuse,use_time,locked) values("' + data.good[i].fct_id + '","' + data.maker_id + '","' + data.good[i].good_id + '","' + data.good[i].num2 + '","' + data.time + '","1","0","1");update buy set look = "0",pass = "1" where buy_id = "' + data.buy_id + '"';
           db.query(sql1, function(err, result) {
             if (err) {
               console.log(err)
@@ -208,7 +208,7 @@ module.exports.myMessageBuyPass = {
         }
       } else if ((data.engine.length != 0) && (data.good.length == 0)) {
         for (var a = 0; a < data.engine.length; a++) {
-          var sql2 = 'insert into engineshow(fct_id,maker_id,engine_type,num,buy_time,inuse,use_time,locked) values("' + data.engine[a].fct_id + '","' + data.maker_id + '","' + data.engine[a].engine_type + '","' + data.engine[a].num1 + '","' + data.time + '","1","0","0");update buy set look = "0",pass = "1" where buy_id = "' + data.buy_id + '"';
+          var sql2 = 'insert into engineshow(fct_id,maker_id,engine_type,num,buy_time,inuse,use_time,locked) values("' + data.engine[a].fct_id + '","' + data.maker_id + '","' + data.engine[a].engine_type + '","' + data.engine[a].num1 + '","' + data.time + '","1","0","1");update buy set look = "0",pass = "1" where buy_id = "' + data.buy_id + '"';
           db.query(sql2, function(err, result) {
             if (err) {
               console.log(err)
@@ -217,7 +217,7 @@ module.exports.myMessageBuyPass = {
         }
       } else if ((data.engine.length != 0) && (data.good.length != 0)) {
         for (var j = 0; j < data.good.length; j++) {
-          var sql3 = 'insert into enginegoods(fct_id,maker_id,good_id,num,buy_time,inuse,use_time,locked) values("' + data.good[j].fct_id + '","' + data.maker_id + '","' + data.good[j].good_id + '","' + data.good[j].num2 + '","' + data.time + '","1","0","0");update buy set look = "0",pass = "1" where buy_id = "' + data.buy_id + '"';
+          var sql3 = 'insert into enginegoods(fct_id,maker_id,good_id,num,buy_time,inuse,use_time,locked) values("' + data.good[j].fct_id + '","' + data.maker_id + '","' + data.good[j].good_id + '","' + data.good[j].num2 + '","' + data.time + '","1","0","1");update buy set look = "0",pass = "1" where buy_id = "' + data.buy_id + '"';
           db.query(sql3, function(err, result) {
             if (err) {
               console.log(err)
@@ -225,7 +225,7 @@ module.exports.myMessageBuyPass = {
           })
         }
         for (var b = 0; b < data.engine.length; b++) {
-          var sql4 = 'insert into engineshow(fct_id,maker_id,engine_type,num,buy_time,inuse,use_time,locked) values("' + data.engine[b].fct_id + '","' + data.maker_id + '","' + data.engine[b].engine_type + '","' + data.engine[b].num1 + '","' + data.time + '","1","0","0");update buy set look = "0",pass = "1" where buy_id = "' + data.buy_id + '"';
+          var sql4 = 'insert into engineshow(fct_id,maker_id,engine_type,num,buy_time,inuse,use_time,locked) values("' + data.engine[b].fct_id + '","' + data.maker_id + '","' + data.engine[b].engine_type + '","' + data.engine[b].num1 + '","' + data.time + '","1","0","1");update buy set look = "0",pass = "1" where buy_id = "' + data.buy_id + '"';
           db.query(sql4, function(err, result) {
             if (err) {
               console.log(err)
@@ -471,7 +471,7 @@ module.exports.changeForm = {
 module.exports.mainGetFct = {
   get: function(req, res, next) {
     var fct_id = req.session.fct_id
-    var sql = 'select * from engineshow where fct_id = "' + fct_id + '";select a.*,b.good_name from enginegoods a join goods b on a.good_id = b.good_id where a.fct_id = "' + fct_id + '"'
+    var sql = 'select a.*,b.live_time from engineshow a join engine b on a.engine_type = b.engine_type where a.fct_id = "' + fct_id + '";select a.*,b.good_name,b.live_time from enginegoods a join goods b on a.good_id = b.good_id where a.fct_id = "' + fct_id + '"'
     db.query(sql, function(err, result) {
       if (err) {
         console.log(err)
@@ -480,3 +480,63 @@ module.exports.mainGetFct = {
     })
   }
 };
+
+module.exports.updateEngineFct = {
+  post: function(req, res, next) {
+    var json = {
+      died_time: req.body.died_time,
+      inuse: req.body.inuse,
+      use_time: req.body.use_time,
+      locked: req.body.locked,
+      id: req.body.id
+    }
+    if (json.died_time === null) {
+      var sql = 'update engineshow set died_time = null,use_time = "' + json.use_time + '",inuse = "' + json.inuse + '",locked = "' + json.inuse + '" where id = "' + json.id + '"';
+      db.query(sql, function(err, result) {
+        if (err) {
+          console.log(err)
+        }
+        res.send('ok')
+      })
+    } else {
+      var sql1 = 'update engineshow set died_time = "' + json.died_time + '",use_time = "' + json.use_time + '",inuse = "' + json.inuse + '",locked = "' + json.inuse + '" where id = "' + json.id + '"';
+      db.query(sql1, function(err, result) {
+        if (err) {
+          console.log(err)
+        }
+        res.send('ok')
+      })
+    }
+
+  }
+}
+
+module.exports.updateGoodFct = {
+  post: function(req, res, next) {
+    var json = {
+      died_time: req.body.died_time,
+      inuse: req.body.inuse,
+      use_time: req.body.use_time,
+      locked: req.body.locked,
+      id: req.body.id
+    }
+    if (json.died_time === null) {
+      var sql = 'update enginegoods set died_time = null,use_time = "' + json.use_time + '",inuse = "' + json.inuse + '",locked = "' + json.inuse + '" where id = "' + json.id + '"';
+      db.query(sql, function(err, result) {
+        if (err) {
+          console.log(err)
+        }
+        res.send('ok')
+      })
+    } else {
+      var sql1 = 'update enginegoods set died_time = "' + json.died_time + '",use_time = "' + json.use_time + '",inuse = "' + json.inuse + '",locked = "' + json.inuse + '" where id = "' + json.id + '"';
+      db.query(sql1, function(err, result) {
+        if (err) {
+          console.log(err)
+        }
+        res.send('ok')
+      })
+    }
+
+  }
+}
