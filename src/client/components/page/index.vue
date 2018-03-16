@@ -11,8 +11,8 @@
 		<el-row :gutter="10" class="main">
 		  <el-col :xs="24" :sm="{span: 22, offset: 1}" :md="{span: 22, offset: 1}" :lg="{span: 22, offset: 1}" :xl="{span: 22, offset: 1}">
 		  	<div class="box" v-for="data in homeBoxCollect" @click="toView(data.box_router)">
-	  			<p>{{data.box_name}}</p>
-	  			<p>{{data.box_txt}}</p>
+	  			<p class="box_title">{{data.box_name}}</p>
+	  			<i class="box_txt">{{data.box_txt}}</i>
 		  	</div>
 		  </el-col>
 		</el-row>
@@ -28,8 +28,8 @@
 		  <el-col :xs="24" :sm="{span: 22, offset: 1}" :md="{span: 22, offset: 1}" :lg="{span: 22, offset: 1}" :xl="{span: 22, offset: 1}">
 		  	<div class="grid-content bg-purple-light">
 		  		<div class="box" v-for="data in homeBoxDataView" @click="toView(data.box_router)">
-		  			<p>{{data.box_name}}</p>
-		  			<p>{{data.box_txt}}</p>
+		  			<p class="box_title">{{data.box_name}}</p>
+		  			<i class="box_txt">{{data.box_txt}}</i>
 		  		</div>
 		  	</div>
 		  </el-col>
@@ -46,8 +46,8 @@
 		  <el-col :xs="24" :sm="{span: 22, offset: 1}" :md="{span: 22, offset: 1}" :lg="{span: 22, offset: 1}" :xl="{span: 22, offset: 1}">
 		  	<div class="grid-content bg-purple-light">
 		  		<div class="box" v-for="data in homeBoxProgress" @click="toView(data.box_router)">
-		  			<p>{{data.box_name}}</p>
-		  			<p>{{data.box_txt}}</p>
+		  			<p class="box_title">{{data.box_name}}</p>
+		  			<i class="box_txt">{{data.box_txt}}</i>
 		  		</div>
 		  	</div>
 		  </el-col>
@@ -116,8 +116,8 @@ export default {
     width:100%;
     height:100%;
     /*background-color: #B9D0E3;*/
-	background-image:-webkit-linear-gradient(to bottom, #B9D0E3, #ffffff); 
-	background-image:linear-gradient(to bottom,#B9D0E3,#ffffff)
+	background-image:-webkit-linear-gradient(to bottom, #4682B4, #ffffff); 
+	background-image:linear-gradient(to bottom,#4682B4,#ffffff)
 }
 .el-col {
 border-radius: 4px;
@@ -135,19 +135,29 @@ border-radius: 4px;
 	border-radius:2px;
 	display: inline-block;
 	margin-right: -15px;
-	margin-left:20px;
+	margin-left:25px;
 	margin-bottom: 7px;
 	cursor: pointer;
 	float: left;
 }
-.box p{
+.box p,i{
 	color:#333333;
-	font-size: 17px;
+	/*font-size: 17px;*/
 	/*margin-left: 10px;*/
 	/*margin-top: 10px;*/
 }
 .box:hover{
 	background-color: #F0F0F0;
 	opacity: .8;
+}
+.box_title{
+	font-size: 20px;
+	margin-left: 10px;
+	margin-top: 10px;
+}
+.box_txt{
+	margin-left: 10px;
+	margin-top: 70px;
+	display: block;
 }
 </style>

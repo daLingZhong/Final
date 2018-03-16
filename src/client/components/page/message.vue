@@ -229,7 +229,6 @@ export default {
 			this.waitingChangeFormPass = dest2;
 
 
-			// console.log(param.data[3])		
 			var map3 = {},dest3 = [];
 			var arr3 = param.data[3];
 			for(var x = 0; x < arr3.length; x++){
@@ -245,7 +244,7 @@ export default {
 			                engine:[],
 			                good: [ai3]
 			            });
-			        }else if(ai3.good_name === null){
+			        }else if(ai3.good_id === null){
 			            dest3.push({
 			                id: ai3.id,
 			                maker_id:ai3.maker_id,
@@ -262,14 +261,14 @@ export default {
 			            var dj3 = dest3[y];
 			            if(dj3.id === ai3.id && ai3.engine_type === null){
 			                dj3.good.push(ai3);
-			            }else if(dj3.id === ai3.id && ai3.good_name === null){
+			            }else if(dj3.id === ai3.id && ai3.good_id === null){
 			                dj3.engine.push(ai3);
 			            }
 			        }
 			    }
 			}
 			this.historyBuyForm = dest3;
-
+			// console.log(arr3)
 			
 			var map4 = {},dest4 = [];
 			var arr4 = param.data[4];
